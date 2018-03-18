@@ -1,0 +1,24 @@
+{
+    "extends": "airbnb",
+
+    "env": {
+        "jest": true,
+        "browser": true
+    },
+
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "ecmaFeatures": {
+          "experimentalObjectRestSpread": true
+        }
+      },
+
+    "rules": {
+        "react/prefer-stateless-function": [0, {
+            "ignorePureComponents": true
+        }],
+        "react/jsx-filename-extension": [0,
+            { "extensions": [ ".test.js" ] }
+        ]
+    }
+}
