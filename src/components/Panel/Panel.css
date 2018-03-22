@@ -1,0 +1,36 @@
+.panel-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 10%;
+
+  background: lightskyblue;
+
+  display: flex;
+  align-items: center;
+}
+
+.hamburger {
+  height: 20px;
+  width: 20px;
+
+  color: white;
+}
+
+.header {
+  color: white;
+}
+
+.save-button {
+  margin-left: auto;
+
+  border: none;
+  background-color: rgba(0, 0, 0, 0);
+
+  color: white;
+}
+
+.save-button:active {
+  display: none;
+}
