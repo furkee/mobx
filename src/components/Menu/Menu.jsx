@@ -1,19 +1,41 @@
 import React, { Component } from 'react';
-import { observer, PropTypes } from 'mobx-react';
-import './Menu.css';
+import { observer } from 'mobx-react';
+import PropTypes from 'prop-types';
 import RouteModel from '../../models/RouteModel';
+import StationModel from '../../models/StationModel';
+import './Menu.css';
 
 @observer
-class Menu extends Component {
+export default class Menu extends Component {
   static propTypes = {
-    routes: PropTypes.observableArrayOf(RouteModel).isRequired,
+    routes: PropTypes.arrayOf(RouteModel).isRequired,
+    stations: PropTypes.arrayOf(StationModel).isRequired,
   }
 
-  // eslint-disable-next-line
+  constructor() {
+    super();
+
+    this.state = {
+      routesOpen: false,
+    };
+  }
+
   renderRoute = (route) => {
+    const { routeId, name } = route;
+
     return (
-      <li key={route.routeId}>
-        {route.name}
+      <li key={routeId}>
+        {name}
+      </li>
+    );
+  }
+
+  renderStation = (station) => {
+    const { stopId, stopName } = station;
+
+    return (
+      <li key={stopId}>
+        {stopName}
       </li>
     );
   }
@@ -21,16 +43,22 @@ class Menu extends Component {
   render() {
     return (
       <div className="menu-container">
+        <div className="menu-options-container">
+          <button className="text-button" ng-click={() => this.setState({ routesOpen: true })}>
+            Duraklar
+          </button>
+          <button className="text-button" ng-click={() => this.setState({ routesOpen: false })}>
+            Rotalar
+          </button>
+        </div>
         <ul>
           {
-            this.props.routes
-              ? this.props.routes.slice().map(r => this.renderRoute(r))
-              : null
+            this.state.routesOpen
+              ? this.props.routes.map(r => this.renderRoute(r))
+              : this.props.stations.map(s => this.renderStation(s))
           }
         </ul>
       </div>
     );
   }
 }
-
-export default Menu;
