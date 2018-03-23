@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { observer, PropTypes } from 'mobx-react';
+import RouteModel from '../../models/RouteModel';
+import { hamburger } from '../../images';
 import Menu from '../Menu/';
 import './Panel.css';
-import RouteModel from '../../models/RouteModel';
 
 @observer
 export default class Panel extends Component {
@@ -28,12 +29,7 @@ export default class Panel extends Component {
           className="text-button"
           onClick={this.openHamburgerMenu}
         >
-          <img
-            alt="H"
-            className="hamburger"
-            // eslint-disable-next-line
-            src={require('../../images/hamburger.png')}
-          />
+          <img alt="H" className="hamburger" src={hamburger} />
         </button>
         {
           this.state.isMenuOpen
