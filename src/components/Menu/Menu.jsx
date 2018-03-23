@@ -44,10 +44,10 @@ export default class Menu extends Component {
     return (
       <div className="menu-container">
         <div className="menu-options-container">
-          <button className="text-button" ng-click={() => this.setState({ routesOpen: true })}>
+          <button className="text-button" onClick={() => this.setState({ routesOpen: true })}>
             Duraklar
           </button>
-          <button className="text-button" ng-click={() => this.setState({ routesOpen: false })}>
+          <button className="text-button" onClick={() => this.setState({ routesOpen: false })}>
             Rotalar
           </button>
         </div>
