@@ -5,6 +5,8 @@
 .text-button {
   border: none;
   background-color: rgba(0, 0, 0, 0);
+
+  cursor: pointer;
 }
 
 .text-button:active {

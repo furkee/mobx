@@ -1,18 +1,25 @@
 import React, { Component } from 'react';
-import { observer } from 'mobx-react';
+import { observer, PropTypes } from 'mobx-react';
 import Menu from '../Menu/';
 import './Panel.css';
 
 @observer
 class Panel extends Component {
+  static propTypes = {
+    store: PropTypes.observableObject.isRequired,
+  }
+
   constructor() {
     super();
 
     this.state = { isMenuOpen: true };
   }
 
+  componentWillMount() {
+    this.props.store.fetchStations();
+  }
+
   openHamburgerMenu = () => {
-    console.log(this.state.isMenuOpen);
     this.setState({ isMenuOpen: !this.state.isMenuOpen });
   }
 
@@ -20,12 +27,14 @@ class Panel extends Component {
     return (
       <div className="panel-container">
         <button
+          type="button"
           className="text-button"
           onClick={this.openHamburgerMenu}
         >
           <img
             alt="H"
             className="hamburger"
+            // eslint-disable-next-line
             src={require('../../images/hamburger.png')}
           />
         </button>
