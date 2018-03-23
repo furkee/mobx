@@ -2,21 +2,18 @@ import React, { Component } from 'react';
 import { observer, PropTypes } from 'mobx-react';
 import Menu from '../Menu/';
 import './Panel.css';
+import RouteModel from '../../models/RouteModel';
 
 @observer
-class Panel extends Component {
+export default class Panel extends Component {
   static propTypes = {
-    store: PropTypes.observableObject.isRequired,
+    routes: PropTypes.observableArrayOf(RouteModel).isRequired,
   }
 
   constructor() {
     super();
 
     this.state = { isMenuOpen: true };
-  }
-
-  componentWillMount() {
-    this.props.store.fetchStations();
   }
 
   openHamburgerMenu = () => {
@@ -40,7 +37,7 @@ class Panel extends Component {
         </button>
         {
           this.state.isMenuOpen
-            ? <Menu />
+            ? <Menu routes={this.props.routes} />
             : null
         }
         <p className="header">IETT KONTROL PANELİ</p>
@@ -49,5 +46,3 @@ class Panel extends Component {
     );
   }
 }
-
-export default Panel;

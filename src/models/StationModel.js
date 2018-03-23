@@ -1,5 +1,16 @@
+import { observable } from 'mobx';
 
 export default class StationModel {
+  @observable type;
+  @observable district;
+  @observable stopId;
+  @observable stopName;
+  @observable isPoi;
+  @observable lat;
+  @observable lon;
+  @observable location;
+  @observable routesServed;
+
   constructor(json) {
     this.type = '';
     this.district = '';

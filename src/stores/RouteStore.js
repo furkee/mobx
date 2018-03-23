@@ -1,12 +1,12 @@
 import { observable, action } from 'mobx';
-import StationModel from '../models/StationModel';
+import RouteModel from '../models/RouteModel';
 
-export default class StationStore {
-  @observable stations = [];
+export default class RouteStore {
+  @observable routes = [];
   @observable error = '';
 
-  @action fetchStations() {
-    fetch('http://52.29.79.10:13269/station/', { method: 'GET' })
+  @action fetchRoutes() {
+    fetch('http://52.29.79.10:13269/route/', { method: 'GET' })
       .then(response => response.json())
       .then(this.fetchSuccess)
       .catch(this.fetchFailure);
@@ -14,7 +14,7 @@ export default class StationStore {
 
   @action.bound fetchSuccess(json) {
     this.error = '';
-    this.stations = json.dataFeed.map(d => new StationModel(d));
+    this.Routes = json.dataFeed.map(d => new RouteModel(d));
   }
 
   @action.bound fetchFailure(error) {
