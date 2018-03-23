@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { observer, inject, PropTypes } from 'mobx-react';
 import './App.css';
 import Panel from './Panel';
+import MapContainer from './MapContainer';
 
 @inject('RouteStore', 'StationStore')
 @observer
@@ -23,10 +24,7 @@ class App extends Component {
     return (
       <div className="app">
         <Panel routes={this.props.RouteStore.routes} />
-        <p>IETT durakları FTW</p>
-        {
-          this.props.RouteStore.routes.map(r => <p>{r.name}</p>)
-        }
+        <MapContainer />
       </div>
     );
   }
