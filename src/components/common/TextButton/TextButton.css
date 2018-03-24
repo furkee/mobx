@@ -1,0 +1,15 @@
+.text-button {
+  border: none;
+  background-color: rgba(0, 0, 0, 0);
+
+  cursor: pointer;
+}
+
+.text-button:hover {
+  border: 1px gray solid;
+}
+
+.text-button:active {
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}

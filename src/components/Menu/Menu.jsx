@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { observer, inject, PropTypes as MobxProp } from 'mobx-react';
 import MenuStore from '../../stores/MenuStore';
+import { TextButton } from '../common/';
 import './Menu.css';
 
 @inject(MenuStore.name)
@@ -36,18 +37,12 @@ export default class Menu extends Component {
     return (
       <div className="menu-container">
         <div className="menu-options-container">
-          <button
-            className="text-button"
-            onClick={() => this.props.MenuStore.openRoutes()}
-          >
+          <TextButton onClick={() => this.props.MenuStore.openRoutes()}>
             Duraklar
-          </button>
-          <button
-            className="text-button"
-            onClick={() => this.props.MenuStore.openStations()}
-          >
+          </TextButton>
+          <TextButton onClick={() => this.props.MenuStore.openStations()}>
             Rotalar
-          </button>
+          </TextButton>
         </div>
         <ul>
           {

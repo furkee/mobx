@@ -7,6 +7,7 @@ import RouteStore from '../../stores/RouteStore';
 import StationStore from '../../stores/StationStore';
 import PanelStore from '../../stores/PanelStore';
 import Menu from '../Menu/';
+import { TextButton } from '../common/';
 import './Panel.css';
 
 @inject(RouteStore.name, StationStore.name, PanelStore.name)
@@ -24,13 +25,9 @@ export default class Panel extends Component {
   render() {
     return (
       <div className="panel-container">
-        <button
-          type="button"
-          className="text-button"
-          onClick={() => this.switchHamburgerMenu()}
-        >
+        <TextButton onClick={() => this.switchHamburgerMenu()}>
           <img alt="H" className="hamburger" src={hamburger} />
-        </button>
+        </TextButton>
         {
           this.props.PanelStore.hamburgerActive
             ? <Menu
@@ -40,7 +37,7 @@ export default class Panel extends Component {
             : null
         }
         <p className="header">IETT KONTROL PANELİ</p>
-        <button className="text-button save-button">KAYDET</button>
+        <TextButton className="save-button">KAYDET</TextButton>
       </div>
     );
   }
