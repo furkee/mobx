@@ -6,7 +6,7 @@ import MenuStore from './MenuStore';
 const stores = {
   RouteStore: new RouteStore(),
   StationStore: new StationStore(),
-  // PanelStore: new PanelStore(),
+  PanelStore: new PanelStore(),
   MenuStore: new MenuStore(),
 };
 

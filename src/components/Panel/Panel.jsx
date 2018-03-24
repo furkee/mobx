@@ -5,25 +5,20 @@ import { observer, inject } from 'mobx-react';
 import { hamburger } from '../../images';
 import RouteStore from '../../stores/RouteStore';
 import StationStore from '../../stores/StationStore';
+import PanelStore from '../../stores/PanelStore';
 import Menu from '../Menu/';
 import './Panel.css';
 
-@inject(RouteStore.name, StationStore.name)
+@inject(RouteStore.name, StationStore.name, PanelStore.name)
 @observer
 export default class Panel extends Component {
-  constructor() {
-    super();
-
-    this.state = { isMenuOpen: true };
-  }
-
   componentWillMount() {
     this.props.RouteStore.fetchRoutes();
     this.props.StationStore.fetchStations();
   }
 
-  openHamburgerMenu = () => {
-    this.setState({ isMenuOpen: !this.state.isMenuOpen });
+  switchHamburgerMenu = () => {
+    this.props.PanelStore.switchHamburgerMenu();
   }
 
   render() {
@@ -32,12 +27,12 @@ export default class Panel extends Component {
         <button
           type="button"
           className="text-button"
-          onClick={this.openHamburgerMenu}
+          onClick={() => this.switchHamburgerMenu()}
         >
           <img alt="H" className="hamburger" src={hamburger} />
         </button>
         {
-          this.state.isMenuOpen
+          this.props.PanelStore.hamburgerActive
             ? <Menu
               routes={this.props.RouteStore.routes}
               stations={this.props.StationStore.stations}
