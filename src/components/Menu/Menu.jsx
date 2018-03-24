@@ -1,23 +1,15 @@
 import React, { Component } from 'react';
-import { observer } from 'mobx-react';
-import PropTypes from 'prop-types';
-import RouteModel from '../../models/RouteModel';
-import StationModel from '../../models/StationModel';
+import { observer, inject, PropTypes as MobxProp } from 'mobx-react';
+import MenuStore from '../../stores/MenuStore';
 import './Menu.css';
 
+@inject(MenuStore.name)
 @observer
 export default class Menu extends Component {
   static propTypes = {
-    routes: PropTypes.arrayOf(RouteModel).isRequired,
-    stations: PropTypes.arrayOf(StationModel).isRequired,
-  }
-
-  constructor() {
-    super();
-
-    this.state = {
-      routesOpen: false,
-    };
+    routes: MobxProp.arrayOrObservableArray.isRequired,
+    stations: MobxProp.arrayOrObservableArray.isRequired,
+    MenuStore: MobxProp.observableObject.isRequired,
   }
 
   renderRoute = (route) => {
@@ -44,16 +36,22 @@ export default class Menu extends Component {
     return (
       <div className="menu-container">
         <div className="menu-options-container">
-          <button className="text-button" onClick={() => this.setState({ routesOpen: true })}>
+          <button
+            className="text-button"
+            onClick={() => this.props.MenuStore.openRoutes()}
+          >
             Duraklar
           </button>
-          <button className="text-button" onClick={() => this.setState({ routesOpen: false })}>
+          <button
+            className="text-button"
+            onClick={() => this.props.MenuStore.openStations()}
+          >
             Rotalar
           </button>
         </div>
         <ul>
           {
-            this.state.routesOpen
+            this.props.MenuStore.routesOpen
               ? this.props.routes.map(r => this.renderRoute(r))
               : this.props.stations.map(s => this.renderStation(s))
           }

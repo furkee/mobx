@@ -14,7 +14,7 @@ export default class RouteStore {
 
   @action.bound fetchSuccess(json) {
     this.error = '';
-    this.Routes = json.dataFeed.map(d => new RouteModel(d));
+    this.routes = json.dataFeed.map(d => new RouteModel(d));
   }
 
   @action.bound fetchFailure(error) {
