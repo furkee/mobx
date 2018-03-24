@@ -17,6 +17,7 @@
       },
 
     "rules": {
+        "brace-style": ["error", "stroustrup"],
         "react/prefer-stateless-function": [0, {
             "ignorePureComponents": true
         }],
