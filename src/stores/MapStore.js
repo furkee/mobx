@@ -1,21 +1,38 @@
 import { observable, action, reaction } from 'mobx';
 
 export default class MapStore {
-  menuStore;
-  @observable mapPosition = [41, 29];
-  @observable mapZoom = 10;
+  configurationStore;
+  @observable mapPosition;
+  @observable mapZoom;
   @observable selectedStation;
 
+  constructor() {
+    this.setDefaults();
+  }
+
   init(rootStore) {
-    this.menuStore = rootStore.MenuStore;
+    this.configurationStore = rootStore.ConfigurationStore;
 
     reaction(
-      () => this.menuStore.selectedStation,
+      () => this.configurationStore.currentStation,
       station => this.setStation(station),
     );
   }
 
+  @action setDefaults() {
+    this.selectedStation = null;
+    this.mapPosition = [41, 29];
+    this.mapZoom = 10;
+  }
+
   @action setStation(station) {
-    this.selectedStation = station;
+    if (station) {
+      this.selectedStation = station;
+      this.mapZoom = 12;
+      this.mapPosition = [station.lat, station.lon];
+    }
+    else {
+      this.setDefaults();
+    }
   }
 }
