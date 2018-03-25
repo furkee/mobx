@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
 import { observer, inject, PropTypes as MobxProp } from 'mobx-react';
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
+import Leaflet from 'leaflet';
 import MapStore from '../../stores/MapStore';
+import { marker } from '../../images/';
 import './MapContainer.css';
+
+const customMarker = new Leaflet.Icon({
+  iconUrl: marker,
+  iconSize: [38, 42],
+});
 
 @inject(MapStore.name)
 @observer
@@ -20,6 +27,16 @@ export default class MapContainer extends Component {
       </Marker>
     );
   }
+  // eslint-disable-next-line
+  renderNewPosition = (position) => {
+    return (
+      <Marker position={position.slice()} icon={customMarker}>
+        <Popup>
+          <span>New position of station</span>
+        </Popup>
+      </Marker>
+    );
+  }
 
   render() {
     const mapStore = this.props.MapStore;
@@ -33,6 +50,11 @@ export default class MapContainer extends Component {
         {
           mapStore.selectedStation
             ? this.renderMarker(mapStore.selectedStation)
+            : null
+        }
+        {
+          mapStore.newPosition
+            ? this.renderNewPosition(mapStore.newPosition)
             : null
         }
       </Map>

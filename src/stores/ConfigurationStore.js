@@ -40,9 +40,9 @@ export default class ConfigurationStore {
 
   @action setField(key, value) {
     this.currentStation[key] = value;
-    const updatedStation = new StationModel({ ...this.currentStation });
+    this.currentStation = new StationModel({ ...this.currentStation });
     this.editedStations = {
-      ...this.editedStations, [this.currentStation.stopId]: updatedStation,
+      ...this.editedStations, [this.currentStation.stopId]: this.currentStation,
     };
   }
 }
