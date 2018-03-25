@@ -69,3 +69,7 @@
   /* visibility: collapse; */
   border: 1px groove silver;
 }
+
+.edited {
+  color: red;
+}

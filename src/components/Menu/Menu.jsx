@@ -40,8 +40,11 @@ export default class Menu extends Component {
 
     return (
       <li key={stopId}>
-        <TextButton onClick={() => this.onStationClick(station)}>
-          {stopName + (configurationStore.isEditedStation(station) ? '!' : '')}
+        <TextButton
+          className={configurationStore.isEditedStation(station) ? 'edited' : ''}
+          onClick={() => this.onStationClick(station)}
+        >
+          {stopName}
         </TextButton>
       </li>
     );

@@ -2,19 +2,14 @@ import { observable, action } from 'mobx';
 import StationModel from '../models/StationModel';
 
 export default class ConfigurationStore {
-  mapStore;
   @observable currentStation = null;
   @observable originalStation = null;
   @observable editedStations = {};
 
   @action setStation(station) {
-    if (this.currentStation && this.currentStation === this.originalStation) {
-      console.log('edited mark');
-      this.editedStations[this.currentStation.stopId] = this.currentStation;
-    }
-
     this.originalStation = station;
-    this.currentStation = new StationModel({ ...station });
+    this.currentStation = this.editedStations[station.stopId]
+      || new StationModel({ ...station });
   }
 
   @action save() {
@@ -24,5 +19,10 @@ export default class ConfigurationStore {
 
   isEditedStation(station) {
     return !!this.editedStations[station.stopId];
+  }
+
+  @action setField(key, value) {
+    this.currentStation[key] = value;
+    this.editedStations[this.currentStation.stopId] = this.currentStation;
   }
 }

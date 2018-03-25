@@ -11,9 +11,14 @@ export default class Configuration extends Component {
   }
 
   renderConfigForm = (station) => {
+    const confStore = this.props.ConfigurationStore;
     return (
       <form>
-        <input type="text" value={station.stopName} />
+        <input
+          type="text"
+          value={station.stopName}
+          onChange={event => confStore.setField('stopName', event.target.value)}
+        />
       </form>
     );
   }
