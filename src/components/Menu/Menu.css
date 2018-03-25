@@ -66,8 +66,7 @@
 }
 
 .menu-container li:active {
-  /* visibility: collapse; */
-  border: 1px groove silver;
+  border: 1px groove blue;
 }
 
 .edited {

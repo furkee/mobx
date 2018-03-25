@@ -1,9 +1,24 @@
 .configuration-container {
-  height: 30vh;
+  width: 20vw;
+  height: 100vh;
+  z-index: 999999;
+
+  position: fixed;
+  top: 8vh;
+  bottom: 0;
+  right: 0;
+  background-color: white;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .config-form {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: stretch;
+
+  padding-top: 5%;
 }

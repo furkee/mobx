@@ -23,7 +23,12 @@ export default class MenuStore {
   }
 
   @action selectStation(station) {
-    this.selectedStation = station;
+    if (this.selectedStation && this.selectedStation.stopId === station.stopId) {
+      this.selectedStation = null;
+    }
+    else {
+      this.selectedStation = station;
+    }
   }
 
   @action selectRoute(route) {

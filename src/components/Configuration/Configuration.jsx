@@ -51,13 +51,11 @@ export default class Configuration extends Component {
 
   render() {
     return (
-      <div className="configuration-container">
-        {
-          this.props.ConfigurationStore.currentStation
-            ? this.renderConfigForm(this.props.ConfigurationStore.currentStation)
-            : <p>Menüden bir durak seçin</p>
-        }
-      </div>
+      this.props.ConfigurationStore.currentStation
+        ? <div className="configuration-container">
+          {this.renderConfigForm(this.props.ConfigurationStore.currentStation)}
+        </div>
+        : null
     );
   }
 }
