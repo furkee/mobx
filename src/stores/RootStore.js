@@ -7,11 +7,25 @@ import ConfigurationStore from './ConfigurationStore';
 
 export default class RootStore {
   constructor() {
-    this.RouteStore = new RouteStore(this);
-    this.StationStore = new StationStore(this);
-    this.PanelStore = new PanelStore(this);
-    this.MenuStore = new MenuStore(this);
-    this.MapStore = new MapStore(this);
-    this.ConfigurationStore = new ConfigurationStore(this);
+    this.RouteStore = new RouteStore();
+    this.StationStore = new StationStore();
+    this.PanelStore = new PanelStore();
+    this.MenuStore = new MenuStore();
+    this.MapStore = new MapStore();
+    this.ConfigurationStore = new ConfigurationStore();
+
+    this.init();
   }
+
+  /* eslint-disable */
+  init() {
+    for (const key of Object.keys(this)) {
+      try {
+        this[key].init(this);
+      }
+      // eslint-disable-next-line
+      catch (ex) {}
+    } 
+  }
+  /* eslint-enable */
 }

@@ -1,21 +1,16 @@
-/* eslint react/prop-types: 0 */
-
 import React, { Component } from 'react';
-import { observer, inject } from 'mobx-react';
+import { observer, inject, PropTypes as MobxProps } from 'mobx-react';
 import { hamburger } from '../../images';
-import RouteStore from '../../stores/RouteStore';
-import StationStore from '../../stores/StationStore';
 import PanelStore from '../../stores/PanelStore';
 import Menu from '../Menu/';
 import { TextButton } from '../common/';
 import './Panel.css';
 
-@inject(RouteStore.name, StationStore.name, PanelStore.name)
+@inject(PanelStore.name)
 @observer
 export default class Panel extends Component {
-  componentWillMount() {
-    this.props.RouteStore.fetchRoutes();
-    this.props.StationStore.fetchStations();
+  static propTypes = {
+    PanelStore: MobxProps.observableObject.isRequired,
   }
 
   switchHamburgerMenu = () => {
@@ -30,10 +25,7 @@ export default class Panel extends Component {
         </TextButton>
         {
           this.props.PanelStore.hamburgerActive
-            ? <Menu
-              routes={this.props.RouteStore.routes}
-              stations={this.props.StationStore.stations}
-            />
+            ? <Menu />
             : null
         }
         <p className="header">IETT KONTROL PANELİ</p>

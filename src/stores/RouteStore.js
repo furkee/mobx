@@ -5,6 +5,10 @@ export default class RouteStore {
   @observable routes = [];
   @observable error = '';
 
+  constructor() {
+    this.fetchRoutes();
+  }
+
   @action fetchRoutes() {
     fetch('http://52.29.79.10:13269/route/', { method: 'GET' })
       .then(response => response.json())

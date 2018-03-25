@@ -5,6 +5,10 @@ export default class StationStore {
   @observable stations = [];
   @observable error = '';
 
+  constructor() {
+    this.fetchStations();
+  }
+
   @action fetchStations() {
     fetch('http://52.29.79.10:13269/station/', { method: 'GET' })
       .then(response => response.json())

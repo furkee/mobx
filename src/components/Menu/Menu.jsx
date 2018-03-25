@@ -1,21 +1,20 @@
 import React, { Component } from 'react';
 import { observer, inject, PropTypes as MobxProp } from 'mobx-react';
 import MenuStore from '../../stores/MenuStore';
-import MapStore from '../../stores/MapStore';
-import ConfigurationStore from '../../stores/ConfigurationStore';
+import RouteStore from '../../stores/RouteStore';
+import StationStore from '../../stores/StationStore';
 import { TextButton } from '../common/';
 import './Menu.css';
 
-@inject(MenuStore.name, MapStore.name, ConfigurationStore.name)
+@inject(MenuStore.name, RouteStore.name, StationStore.name)
 @observer
 export default class Menu extends Component {
   static propTypes = {
-    routes: MobxProp.arrayOrObservableArray.isRequired,
-    stations: MobxProp.arrayOrObservableArray.isRequired,
     MenuStore: MobxProp.observableObject.isRequired,
-    MapStore: MobxProp.observableObject.isRequired,
-    ConfigurationStore: MobxProp.observableObject.isRequired,
+    RouteStore: MobxProp.observableObject.isRequired,
+    StationStore: MobxProp.observableObject.isRequired,
   }
+
   // eslint-disable-next-line
   renderRoute = (route) => {
     const { routeId, name } = route;
@@ -31,13 +30,12 @@ export default class Menu extends Component {
 
   renderStation = (station) => {
     const { stopId, stopName } = station;
-    const configurationStore = this.props.ConfigurationStore;
 
     return (
       <li key={stopId}>
         <TextButton
-          className={configurationStore.isEditedStation(station) ? 'edited' : ''}
-          onClick={() => this.props.MapStore.setStation(station)}
+          className={this.props.MenuStore.isEditedStation(station) ? 'edited' : ''}
+          onClick={() => this.props.MenuStore.selectStation(station)}
         >
           {stopName}
         </TextButton>
@@ -59,8 +57,8 @@ export default class Menu extends Component {
         <ul>
           {
             this.props.MenuStore.routesOpen
-              ? this.props.routes.map(r => this.renderRoute(r))
-              : this.props.stations.map(s => this.renderStation(s))
+              ? this.props.RouteStore.routes.map(r => this.renderRoute(r))
+              : this.props.StationStore.stations.map(s => this.renderStation(s))
           }
         </ul>
       </div>
