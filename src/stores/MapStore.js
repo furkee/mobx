@@ -4,9 +4,12 @@ import StationModel from '../models/StationModel';
 export default class MapStore {
   configurationStore;
   stationStore;
+  /** Center of map, also original position for currently edited station */
   @observable mapPosition;
   @observable mapZoom;
+  /** exact copy of currently edited station */
   @observable selectedStation;
+  /** if coordinates were edited, new coordinates will be here */
   @observable newPosition;
 
   constructor() {
@@ -33,10 +36,10 @@ export default class MapStore {
   _compareAndSetPositions(station) {
     const original = this.stationStore.getById(station.stopId);
     const latMatch = original.lat.toString() === station.lat.toString();
-    const lonmatch = original.lon.toString() === station.lon.toString();
+    const lonMatch = original.lon.toString() === station.lon.toString();
 
     this.mapPosition = [original.lat, original.lon];
-    this.newPosition = latMatch && lonmatch
+    this.newPosition = latMatch && lonMatch
       ? null
       : [station.lat, station.lon];
   }

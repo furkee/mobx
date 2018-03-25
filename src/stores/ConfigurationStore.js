@@ -32,6 +32,7 @@ export default class ConfigurationStore {
     }
     /* eslint-enable */
 
+    this.currentStation = new StationModel({ ...this.menuStore.selectedStation });
     this.editedStations = {};
   }
 
