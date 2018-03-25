@@ -24,4 +24,9 @@ export default class StationStore {
   @action.bound fetchFailure(error) {
     this.error = error;
   }
+
+  getById(id) {
+    const res = this.stations.filter(s => s.stopId === id);
+    return res.length > 0 ? res[0] : null;
+  }
 }

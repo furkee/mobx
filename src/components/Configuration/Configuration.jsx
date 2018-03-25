@@ -37,13 +37,13 @@ export default class Configuration extends Component {
           type="number"
           label="Latitude"
           value={station.lat}
-          onChange={event => confStore.setField('lat', event.target.value)}
+          onChange={event => confStore.setNumberField('lat', event.target.value)}
         />
         <Input
           type="number"
           label="Longitude"
           value={station.lon}
-          onChange={event => confStore.setField('lon', event.target.value)}
+          onChange={event => confStore.setNumberField('lon', event.target.value)}
         />
       </form>
     );

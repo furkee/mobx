@@ -18,9 +18,9 @@ export default class MapContainer extends Component {
     MapStore: MobxProp.observableObject.isRequired,
   }
   // eslint-disable-next-line
-  renderMarker = (station) => {
+  renderMarker = (station, position) => {
     return (
-      <Marker position={[station.lat, station.lon]} key={station.stopId}>
+      <Marker position={position} key={station.stopId}>
         <Popup>
           <span>{station.stopName}</span>
         </Popup>
@@ -49,7 +49,7 @@ export default class MapContainer extends Component {
         />
         {
           mapStore.selectedStation
-            ? this.renderMarker(mapStore.selectedStation)
+            ? this.renderMarker(mapStore.selectedStation, mapStore.mapPosition.slice())
             : null
         }
         {

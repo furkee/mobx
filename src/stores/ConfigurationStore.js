@@ -20,6 +20,7 @@ export default class ConfigurationStore {
       this.currentStation = null;
       return;
     }
+
     this.currentStation = this.editedStations[station.stopId]
       || new StationModel({ ...station });
   }
@@ -44,5 +45,9 @@ export default class ConfigurationStore {
     this.editedStations = {
       ...this.editedStations, [this.currentStation.stopId]: this.currentStation,
     };
+  }
+
+  @action setNumberField(key, value) {
+    this.setField(key, Number(value));
   }
 }

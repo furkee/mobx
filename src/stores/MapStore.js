@@ -3,6 +3,7 @@ import StationModel from '../models/StationModel';
 
 export default class MapStore {
   configurationStore;
+  stationStore;
   @observable mapPosition;
   @observable mapZoom;
   @observable selectedStation;
@@ -14,6 +15,7 @@ export default class MapStore {
 
   init(rootStore) {
     this.configurationStore = rootStore.ConfigurationStore;
+    this.stationStore = rootStore.StationStore;
 
     reaction(
       () => this.configurationStore.currentStation,
@@ -28,27 +30,23 @@ export default class MapStore {
     this.newPosition = null;
   }
 
-  /** if station is the same as selectedStation, then we received an edit */
-  _isUpdate(station) {
-    if (this.selectedStation && station) {
-      return this.selectedStation.stopId === station.stopId;
-    }
+  _compareAndSetPositions(station) {
+    const original = this.stationStore.getById(station.stopId);
+    const latMatch = original.lat.toString() === station.lat.toString();
+    const lonmatch = original.lon.toString() === station.lon.toString();
 
-    return false;
+    this.mapPosition = [original.lat, original.lon];
+    this.newPosition = latMatch && lonmatch
+      ? null
+      : [station.lat, station.lon];
   }
 
   @action setStation(station) {
-    // eslint-disable-next-line
-    if(this._isUpdate(station)) {
-      this.newPosition = [parseFloat(station.lat), parseFloat(station.lon)];
-      return;
-    }
-
     if (station) {
       this.selectedStation = new StationModel({ ...station });
       this.mapZoom = 12;
-      this.mapPosition = [station.lat, station.lon];
-      this.newPosition = null;
+      // eslint-disable-next-line
+      this._compareAndSetPositions(station);
     }
     else {
       this.setDefaults();
