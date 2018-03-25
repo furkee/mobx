@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import { observer, inject, PropTypes as MobxProp } from 'mobx-react';
 import MenuStore from '../../stores/MenuStore';
 import MapStore from '../../stores/MapStore';
+import ConfigurationStore from '../../stores/ConfigurationStore';
 import { TextButton } from '../common/';
 import './Menu.css';
 
-@inject(MenuStore.name, MapStore.name)
+@inject(MenuStore.name, MapStore.name, ConfigurationStore.name)
 @observer
 export default class Menu extends Component {
   static propTypes = {
@@ -13,8 +14,9 @@ export default class Menu extends Component {
     stations: MobxProp.arrayOrObservableArray.isRequired,
     MenuStore: MobxProp.observableObject.isRequired,
     MapStore: MobxProp.observableObject.isRequired,
+    ConfigurationStore: MobxProp.observableObject.isRequired,
   }
-
+  // eslint-disable-next-line
   renderRoute = (route) => {
     const { routeId, name } = route;
 
@@ -27,13 +29,19 @@ export default class Menu extends Component {
     );
   }
 
+  onStationClick = (station) => {
+    this.props.MapStore.setStation(station);
+    this.props.ConfigurationStore.setStation(station);
+  }
+
   renderStation = (station) => {
     const { stopId, stopName } = station;
+    const configurationStore = this.props.ConfigurationStore;
 
     return (
       <li key={stopId}>
-        <TextButton onClick={() => this.props.MapStore.setStation(station)}>
-          {stopName}
+        <TextButton onClick={() => this.onStationClick(station)}>
+          {stopName + (configurationStore.isEditedStation(station) ? '!' : '')}
         </TextButton>
       </li>
     );
