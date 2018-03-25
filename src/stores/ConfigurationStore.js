@@ -31,7 +31,6 @@ export default class ConfigurationStore {
     }
     /* eslint-enable */
 
-    this.currentStation = null;
     this.editedStations = {};
   }
 
@@ -41,6 +40,9 @@ export default class ConfigurationStore {
 
   @action setField(key, value) {
     this.currentStation[key] = value;
-    this.editedStations[this.currentStation.stopId] = new StationModel({ ...this.currentStation });
+    const updatedStation = new StationModel({ ...this.currentStation });
+    this.editedStations = {
+      ...this.editedStations, [this.currentStation.stopId]: updatedStation,
+    };
   }
 }

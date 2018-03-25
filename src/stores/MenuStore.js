@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx';
+import { observable, action, reaction } from 'mobx';
 
 export default class MenuStore {
   configurationStore;
@@ -8,6 +8,8 @@ export default class MenuStore {
 
   init(rootStore) {
     this.configurationStore = rootStore.ConfigurationStore;
+
+    reaction(() => this.configurationStore.editedStations);
   }
 
   isEditedStation(station) {
