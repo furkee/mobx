@@ -4,10 +4,12 @@ import { Provider } from 'mobx-react';
 import registerServiceWorker from './registerServiceWorker';
 import App from './components/App';
 import './index.css';
-import stores from './stores';
+import RootStore from './stores/RootStore';
+
+const store = new RootStore();
 
 ReactDOM.render(
-  <Provider {...stores}>
+  <Provider {...store}>
     <App />
   </Provider>,
   // eslint-disable-next-line

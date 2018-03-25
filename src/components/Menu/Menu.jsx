@@ -29,11 +29,6 @@ export default class Menu extends Component {
     );
   }
 
-  onStationClick = (station) => {
-    this.props.MapStore.setStation(station);
-    this.props.ConfigurationStore.setStation(station);
-  }
-
   renderStation = (station) => {
     const { stopId, stopName } = station;
     const configurationStore = this.props.ConfigurationStore;
@@ -42,7 +37,7 @@ export default class Menu extends Component {
       <li key={stopId}>
         <TextButton
           className={configurationStore.isEditedStation(station) ? 'edited' : ''}
-          onClick={() => this.onStationClick(station)}
+          onClick={() => this.props.MapStore.setStation(station)}
         >
           {stopName}
         </TextButton>

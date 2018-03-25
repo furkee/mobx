@@ -1,10 +1,20 @@
-import { observable, action } from 'mobx';
+import { observable, action, reaction } from 'mobx';
 import StationModel from '../models/StationModel';
 
 export default class ConfigurationStore {
+  mapStore;
   @observable currentStation = null;
   @observable originalStation = null;
   @observable editedStations = {};
+
+  constructor(rootStore) {
+    this.mapStore = rootStore.MapStore;
+
+    reaction(
+      () => this.mapStore.selectedStation,
+      station => this.setStation(station),
+    );
+  }
 
   @action setStation(station) {
     this.originalStation = station;
