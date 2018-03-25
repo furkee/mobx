@@ -13,13 +13,11 @@ export default class MenuStore {
     reaction(
       () => this.configurationStore.editedStations,
       // eslint-disable-next-line
-      editedStations => { this.open},
+      editedStations => this.editedStations = Object.keys(editedStations),
     );
   }
 
   @action isEditedStation(station) {
-    // this.routesOpen = !this.routesOpen;
-    // this.routesopen = !this.routesopen;
     return this.configurationStore.isEditedStation(station);
   }
 
