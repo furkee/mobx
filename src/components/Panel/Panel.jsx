@@ -29,7 +29,9 @@ export default class Panel extends Component {
             : null
         }
         <p className="header">IETT KONTROL PANELİ</p>
-        <TextButton className="save-button">KAYDET</TextButton>
+        <TextButton className="save-button" onClick={() => this.props.PanelStore.save()}>
+          KAYDET
+        </TextButton>
       </div>
     );
   }

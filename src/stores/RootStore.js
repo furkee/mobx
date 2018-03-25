@@ -23,7 +23,6 @@ export default class RootStore {
       try {
         this[key].init(this);
       }
-      // eslint-disable-next-line
       catch (ex) {}
     } 
   }

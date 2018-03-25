@@ -1,20 +1,13 @@
-import { observable, action, reaction } from 'mobx';
+import { observable, action } from 'mobx';
 
 export default class MenuStore {
   configurationStore;
   @observable routesOpen = true;
   @observable selectedStation;
   @observable selectedRoute;
-  @observable editedStations = [];
 
   init(rootStore) {
     this.configurationStore = rootStore.ConfigurationStore;
-
-    reaction(
-      () => this.configurationStore.editedStations,
-      // eslint-disable-next-line
-      editedStations => this.editedStations = Object.keys(editedStations),
-    );
   }
 
   @action isEditedStation(station) {

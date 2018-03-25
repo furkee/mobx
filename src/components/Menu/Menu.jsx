@@ -21,7 +21,7 @@ export default class Menu extends Component {
 
     return (
       <li key={routeId}>
-        <TextButton onClick={() => console.log(route)}>
+        <TextButton onClick={() => this.props.MenuStore.selectRoute(route)}>
           {name}
         </TextButton>
       </li>

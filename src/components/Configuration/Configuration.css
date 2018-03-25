@@ -1,3 +1,9 @@
 .configuration-container {
   height: 30vh;
 }
+
+.config-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
