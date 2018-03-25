@@ -10,8 +10,16 @@ export default class MenuStore {
     this.configurationStore = rootStore.ConfigurationStore;
   }
 
-  @action isEditedStation(station) {
+  isEditedStation(station) {
     return this.configurationStore.isEditedStation(station);
+  }
+
+  isSelectedStation(station) {
+    if (this.selectedStation && station) {
+      return this.selectedStation.stopId === station.stopId;
+    }
+
+    return false;
   }
 
   @action openRoutes() {

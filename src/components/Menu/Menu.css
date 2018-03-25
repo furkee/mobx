@@ -66,9 +66,13 @@
 }
 
 .menu-container li:active {
-  border: 1px groove blue;
+  border: 1px groove silver;
 }
 
 .edited {
   color: red;
+}
+
+.active {
+  background-color: lightskyblue;
 }

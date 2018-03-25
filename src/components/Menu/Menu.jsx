@@ -29,15 +29,16 @@ export default class Menu extends Component {
   }
 
   renderStation = (station) => {
-    const { stopId, stopName } = station;
+    const selected = this.props.MenuStore.isSelectedStation(station);
+    const edited = this.props.MenuStore.isEditedStation(station);
 
     return (
-      <li key={stopId}>
+      <li key={station.stopId} className={selected ? 'active' : ''}>
         <TextButton
-          className={this.props.MenuStore.isEditedStation(station) ? 'edited' : ''}
+          className={edited ? 'edited' : ''}
           onClick={() => this.props.MenuStore.selectStation(station)}
         >
-          {stopName}
+          {station.stopName}
         </TextButton>
       </li>
     );
