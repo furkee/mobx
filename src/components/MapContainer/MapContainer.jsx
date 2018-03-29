@@ -32,9 +32,13 @@ export default class MapContainer extends Component {
         draggable={!this.props.MapStore.newPosition}
         onDragend={() => this.createNewMarker()}
       >
-        <Popup>
-          <span>{station.stopName}</span>
-        </Popup>
+        {
+          this.props.MapStore.newPosition
+          ? <Popup>
+            <span>{`Original position of ${station.stopName}`}</span>
+          </Popup>
+          : null
+        }
       </Marker>
     );
   }

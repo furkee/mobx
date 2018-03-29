@@ -1,23 +1,29 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { TextButton } from '../../common';
+import { leftArrow, rightArrow } from '../../../images/';
 import './Pagination.css';
 
-export default class Pagination extends Component {
-  static propTypes = {
-    current: PropTypes.number.isRequired,
-    total: PropTypes.number.isRequired,
-    callback: PropTypes.func.isRequired,
-  }
+const Pagination = ({ current, total, callback }) => (
+  <div className="pagination-container">
+    <TextButton onClick={() => callback(current - 1)}>
+      <img alt="P" className="pagination-icon" src={leftArrow} />
+    </TextButton>
 
-  render() {
-    const { current, total, callback } = this.props;
-    return (
-      <div className="pagination-container">
-        <TextButton onClick={() => callback(current - 1)}>Prev</TextButton>
-        <p>{`${current + 1}/${total}`}</p>
-        <TextButton onClick={() => callback(current + 1)}>Next</TextButton>
-      </div>
-    );
-  }
-}
+    <div className="">
+      {`${current + 1}/${total}`}
+    </div>
+
+    <TextButton onClick={() => callback(current + 1)}>
+      <img alt="N" className="pagination-icon" src={rightArrow} />
+    </TextButton>
+  </div>
+);
+
+Pagination.propTypes = {
+  current: PropTypes.number.isRequired,
+  total: PropTypes.number.isRequired,
+  callback: PropTypes.func.isRequired,
+};
+
+export default Pagination;
