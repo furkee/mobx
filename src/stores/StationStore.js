@@ -4,13 +4,15 @@ import StationModel from '../models/StationModel';
 export default class StationStore {
   @observable stations = [];
   @observable error = '';
+  @observable page = 0;
 
   constructor() {
     this.fetchStations();
   }
 
-  @action fetchStations() {
-    fetch('http://52.29.79.10:13269/station/', { method: 'GET' })
+  @action fetchStations(page = 0) {
+    this.page = page;
+    fetch(`http://52.29.79.10:13269/station/?page=${page}`, { method: 'GET' })
       .then(response => response.json())
       .then(this.fetchSuccess)
       .catch(this.fetchFailure);
