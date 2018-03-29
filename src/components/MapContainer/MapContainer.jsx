@@ -17,20 +17,41 @@ export default class MapContainer extends Component {
   static propTypes = {
     MapStore: MobxProp.observableObject.isRequired,
   }
+
+  createNewMarker = () => {
+    const { lat, lng } = this.originalMarker.leafletElement.getLatLng();
+    this.props.MapStore.setNewPosition(lat, lng);
+  }
   // eslint-disable-next-line
   renderMarker = (station, position) => {
     return (
-      <Marker position={position} key={station.stopId}>
+      <Marker
+        // eslint-disable-next-line
+        ref={el => this.originalMarker = el}
+        position={position}
+        draggable={!this.props.MapStore.newPosition}
+        onDragend={() => this.createNewMarker()}
+      >
         <Popup>
           <span>{station.stopName}</span>
         </Popup>
       </Marker>
     );
   }
+
+  updateNewPosition = (event) => {
+    const { lat, lng } = event.latlng;
+    this.props.MapStore.setNewPosition(lat, lng);
+  }
   // eslint-disable-next-line
   renderNewPosition = (position) => {
     return (
-      <Marker position={position.slice()} icon={customMarker}>
+      <Marker
+        position={position.slice()}
+        icon={customMarker}
+        draggable
+        onDrag={event => this.updateNewPosition(event)}
+      >
         <Popup>
           <span>New position of station</span>
         </Popup>

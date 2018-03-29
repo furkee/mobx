@@ -1,5 +1,4 @@
 import { observable, action, reaction } from 'mobx';
-import StationModel from '../models/StationModel';
 
 export default class MapStore {
   configurationStore;
@@ -7,9 +6,9 @@ export default class MapStore {
   /** Center of map, also original position for currently edited station */
   @observable mapPosition;
   @observable mapZoom;
-  /** exact copy of currently edited station */
+  /** Points to currently edited station in configuration store */
   @observable selectedStation;
-  /** if coordinates were edited, new coordinates will be here */
+  /** If coordinates were edited, new coordinates will be here */
   @observable newPosition;
 
   constructor() {
@@ -46,13 +45,21 @@ export default class MapStore {
 
   @action setStation(station) {
     if (station) {
-      this.selectedStation = new StationModel({ ...station });
+      this.selectedStation = station;
       this.mapZoom = 12;
       // eslint-disable-next-line
       this._compareAndSetPositions(station);
     }
     else {
       this.setDefaults();
+    }
+  }
+
+  @action setNewPosition(lat, lon) {
+    if (this.selectedStation) {
+      this.configurationStore.setNumberField('lat', lat);
+      this.configurationStore.setNumberField('lon', lon);
+      this.newPosition = [lat, lon];
     }
   }
 }

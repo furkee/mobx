@@ -3,7 +3,12 @@ import StationModel from '../models/StationModel';
 
 export default class ConfigurationStore {
   menuStore;
+  /**
+   * On station selection, copies original values, and allows edits only on this copy.
+   * Copy is preserved in state as long as it is not disregarded, or saved
+   */
   @observable currentStation = null;
+  /** A map that holds dirty(edited) stations for quick lookup and retrieval */
   @observable editedStations = {};
 
   init(rootStore) {
