@@ -83,7 +83,7 @@ export default class Menu extends Component {
         <div className="menu-paginator-container">
           <Pagination
             total={20}
-            current={this.currentPage()}
+            current={this.currentPage}
             callback={page => this.paginate(page)}
           />
         </div>

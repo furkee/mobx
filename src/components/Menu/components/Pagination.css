@@ -8,3 +8,28 @@
 .pagination-icon {
   height: 18px;
 }
+
+.pagination-input-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  border: 1px solid gray;
+
+  font-size: 15px;
+}
+
+.pagination-input-container input {
+  text-align: center;
+  width: 2em;
+
+  border: none;
+}
+
+.pagination-input-container
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
