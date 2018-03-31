@@ -6,7 +6,7 @@ import './Pagination.css';
 
 export default class Pagination extends Component {
   static propTypes = {
-    current: PropTypes.func.isRequired,
+    current: PropTypes.number.isRequired,
     total: PropTypes.number.isRequired,
     callback: PropTypes.func.isRequired,
   };
@@ -19,7 +19,7 @@ export default class Pagination extends Component {
   }
 
   componentWillReceiveProps() {
-    this.setState({ page: this.props.current() });
+    this.setState({ page: this.props.current });
   }
 
   updatePage = (event) => {
@@ -37,7 +37,7 @@ export default class Pagination extends Component {
     const { current, total, callback } = this.props;
     return (
       <div className="pagination-container">
-        <TextButton onClick={() => callback(current() - 1)}>
+        <TextButton onClick={() => callback(current - 1)}>
           <img alt="P" className="pagination-icon" src={leftArrow} />
         </TextButton>
 
@@ -53,7 +53,7 @@ export default class Pagination extends Component {
           {`/${total}`}
         </div>
 
-        <TextButton onClick={() => callback(current() + 1)}>
+        <TextButton onClick={() => callback(current + 1)}>
           <img alt="N" className="pagination-icon" src={rightArrow} />
         </TextButton>
       </div>

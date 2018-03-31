@@ -1,34 +1,15 @@
 import React, { Component } from 'react';
 import { observer, inject, PropTypes as MobxProp } from 'mobx-react';
 import MenuStore from '../../stores/MenuStore';
-import RouteStore from '../../stores/RouteStore';
-import StationStore from '../../stores/StationStore';
 import { TextButton } from '../common/';
 import Pagination from './components/Pagination';
 import './Menu.css';
 
-@inject(MenuStore.name, RouteStore.name, StationStore.name)
+@inject(MenuStore.name)
 @observer
 export default class Menu extends Component {
   static propTypes = {
     MenuStore: MobxProp.observableObject.isRequired,
-    RouteStore: MobxProp.observableObject.isRequired,
-    StationStore: MobxProp.observableObject.isRequired,
-  }
-
-  currentPage = () => (
-    this.props.MenuStore.routesOpen
-      ? this.props.RouteStore.page
-      : this.props.StationStore.page
-  )
-
-  paginate = (page) => {
-    if (this.props.MenuStore.routesOpen) {
-      this.props.RouteStore.fetchRoutes(page);
-    }
-    else {
-      this.props.StationStore.fetchStations(page);
-    }
   }
 
   // eslint-disable-next-line
@@ -75,16 +56,16 @@ export default class Menu extends Component {
           <ul>
             {
               this.props.MenuStore.routesOpen
-                ? this.props.RouteStore.routes.map(r => this.renderRoute(r))
-                : this.props.StationStore.stations.map(s => this.renderStation(s))
+                ? this.props.MenuStore.getRoutes.map(r => this.renderRoute(r))
+                : this.props.MenuStore.getStations.map(s => this.renderStation(s))
             }
           </ul>
         </div>
         <div className="menu-paginator-container">
           <Pagination
             total={20}
-            current={this.currentPage}
-            callback={page => this.paginate(page)}
+            current={this.props.MenuStore.currentPage}
+            callback={page => this.props.MenuStore.paginate(page)}
           />
         </div>
       </div>

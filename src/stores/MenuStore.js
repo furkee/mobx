@@ -1,15 +1,17 @@
-import { observable, action, reaction } from 'mobx';
+import { observable, action, computed } from 'mobx';
 
 export default class MenuStore {
   configurationStore;
+  routeStore;
+  stationStore;
   @observable routesOpen = true;
   @observable selectedStation;
   @observable selectedRoute;
 
   init(rootStore) {
     this.configurationStore = rootStore.ConfigurationStore;
-
-    reaction(() => this.configurationStore.editedStations);
+    this.routeStore = rootStore.RouteStore;
+    this.stationStore = rootStore.StationStore;
   }
 
   isEditedStation(station) {
@@ -22,6 +24,33 @@ export default class MenuStore {
     }
 
     return false;
+  }
+
+  @action paginate(page) {
+    if (this.routesOpen) {
+      this.routeStore.fetchRoutes(page);
+    }
+    else {
+      this.stationStore.fetchStations(page);
+    }
+  }
+
+  @computed get currentPage() {
+    return this.routesOpen
+      ? this.routeStore.page
+      : this.stationStore.page;
+  }
+
+  @computed get getStations() {
+    const editedStations = this.configurationStore.getEditedStationList();
+    const stations = this.stationStore.stations
+      .filter(s => !this.configurationStore.isEditedStation(s));
+
+    return editedStations.concat(stations);
+  }
+
+  @computed get getRoutes() {
+    return this.routeStore.routes;
   }
 
   @action openRoutes() {

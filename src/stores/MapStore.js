@@ -33,7 +33,7 @@ export default class MapStore {
   }
 
   _compareAndSetPositions(station) {
-    const original = this.stationStore.getById(station.stopId);
+    const original = this.configurationStore.getOriginalCopyOfEditedStation();
     const latMatch = original.lat.toString() === station.lat.toString();
     const lonMatch = original.lon.toString() === station.lon.toString();
 

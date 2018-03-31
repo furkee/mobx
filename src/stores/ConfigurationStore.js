@@ -21,14 +21,22 @@ export default class ConfigurationStore {
     );
   }
 
-  @action setStation(station) {
-    if (station === null) {
-      if (!this.isEditedStation(this.currentStation)) {
-        delete this.editedStations[this.currentStation.stopId];
+  @action.bound removeUneditesFromEditedStations() {
+    /* eslint-disable */
+    const copyEdited = { ...this.editedStations };
+    for (const key of Object.keys(copyEdited)) {
+      if (!this.isEditedStation(this.editedStations[key].edited)) {
+        delete this.editedStations[key];
       }
+    }
+    /* eslint-enable */
+  }
 
+  @action setStation(station) {
+    this.removeUneditesFromEditedStations();
+
+    if (!station) {
       this.currentStation = null;
-
       return;
     }
 
@@ -70,12 +78,32 @@ export default class ConfigurationStore {
   }
 
   isEditedStation(station) {
-    if (station == null) {
+    if (!station) {
       return false;
     }
 
     const ref = this.editedStations[station.stopId];
     return !!ref && Object.keys(diff(ref.edited, ref.originalCopy)).length > 0;
+  }
+
+  getEditedStationList() {
+    const list = [];
+    /* eslint-disable */
+    for (const key of Object.keys(this.editedStations)) {
+      if (this.isEditedStation(this.editedStations[key].edited)) {
+        list.push(this.editedStations[key].edited);
+      }
+    }
+    /* eslint-enable */
+    return list;
+  }
+
+  getOriginalCopyOfEditedStation() {
+    if (!this.currentStation) {
+      return null;
+    }
+
+    return this.editedStations[this.currentStation.stopId].originalCopy;
   }
 
   @action setField(key, value) {
