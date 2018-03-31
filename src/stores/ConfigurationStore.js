@@ -21,7 +21,7 @@ export default class ConfigurationStore {
     );
   }
 
-  @action.bound removeUneditesFromEditedStations() {
+  removeUneditesFromEditedStations() {
     /* eslint-disable */
     const copyEdited = { ...this.editedStations };
     for (const key of Object.keys(copyEdited)) {
